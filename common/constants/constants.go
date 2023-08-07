@@ -9,9 +9,7 @@ import (
 type PlatformEnvType int
 
 const (
-	PlatformEnvDEV PlatformEnvType = iota + 1
-	PlatformEnvUAT
-	PlatformEnvLR
+	PlatformEnvLR PlatformEnvType = iota + 3
 	PlatformEnvPRE
 	PlatformEnvOnline
 )

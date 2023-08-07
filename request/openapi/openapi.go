@@ -4,15 +4,15 @@ import (
 	"context"
 	"strconv"
 
-	"github.com/tidwall/gjson"
-
 	"github.com/byted-apaas/faas-sdk-go/common/structs"
 	"github.com/byted-apaas/faas-sdk-go/common/utils"
 	reqCommon "github.com/byted-apaas/faas-sdk-go/request/common"
 	cConstants "github.com/byted-apaas/server-common-go/constants"
 	cExceptions "github.com/byted-apaas/server-common-go/exceptions"
 	cHttp "github.com/byted-apaas/server-common-go/http"
+	cStructs "github.com/byted-apaas/server-common-go/structs"
 	cUtils "github.com/byted-apaas/server-common-go/utils"
+	"github.com/tidwall/gjson"
 )
 
 type RequestHttp struct{}
@@ -20,7 +20,7 @@ type RequestHttp struct{}
 func (r *RequestHttp) InvokeFunctionWithAuth(ctx context.Context, appCtx *structs.AppCtx, apiName string, params interface{}, result interface{}) error {
 	ctx = utils.SetCtx(ctx, appCtx, cConstants.InvokeFuncWithAuth)
 
-	body, err := reqCommon.BuildInvokeParamsObj(ctx, apiName, params)
+	body, err := reqCommon.BuildInvokeParamsObj(ctx, apiName, params, appCtx == nil || appCtx.Credential == nil || appCtx.Mode != structs.AppModeOpenSDK)
 	if err != nil {
 		return err
 	}
@@ -59,6 +59,19 @@ func (r *RequestHttp) InvokeFunctionWithAuth(ctx context.Context, appCtx *struct
 		if err := cUtils.JsonUnmarshalBytes([]byte(dataRaw), result); err != nil {
 			return cExceptions.InvalidParamError("InvokeFunctionWithAuth failed, err: %v", err)
 		}
+	}
+
+	permission := cStructs.Permission{}
+	permissionRaw := gjson.GetBytes([]byte(resp.Result), "permission").Raw
+	if len(permissionRaw) > 0 {
+		if err := cUtils.JsonUnmarshalBytes([]byte(permissionRaw), &permission); err != nil {
+			return cExceptions.InvalidParamError("InvokeFunctionWithAuth failed, err: %v, logid: %v", err, logid)
+		}
+	}
+
+	_, err = cHttp.AppendParamsUnauthFields(ctx, apiName, "output", result, permission.UnauthFields)
+	if err != nil {
+		return err
 	}
 
 	return nil

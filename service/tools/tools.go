@@ -20,6 +20,12 @@ type ITools interface {
 
 	// ParseErr 转换 err 为有结构的错误，若 err 非系统返回的，则 code 为 ErrCodeDeveloperError
 	ParseErr(ctx context.Context, err error) *cExceptions.BaseError
+
+	// MockUserID Mock 用户 ID，比如测试权限场景
+	MockUserID(ctx context.Context, userID int64) context.Context
+
+	// GetLogID 获取 logid
+	GetLogID(ctx context.Context) string
 }
 
 // RetryOption 重试选项
@@ -53,4 +59,12 @@ func (t *Tools) SetLaneNameToCtx(ctx context.Context, lane string) context.Conte
 
 func (t *Tools) ParseErr(ctx context.Context, err error) *exceptions.BaseError {
 	return cExceptions.ParseErrForUser(err)
+}
+
+func (t *Tools) MockUserID(ctx context.Context, userID int64) context.Context {
+	return cUtils.SetUserIDToCtx(ctx, userID)
+}
+
+func (t *Tools) GetLogID(ctx context.Context) string {
+	return cUtils.GetLogIDFromCtx(ctx)
 }

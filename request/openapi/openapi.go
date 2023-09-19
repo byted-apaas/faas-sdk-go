@@ -34,7 +34,7 @@ func (r *RequestHttp) InvokeFunctionWithAuth(ctx context.Context, appCtx *struct
 	}
 
 	respBody, extra, err := getOpenapiClient().PostJson(ctx, GetPathInvokeFunctionWithAuth(namespace, apiName), headers, body, cHttp.AppTokenMiddleware)
-	data, err := errorWrapper(respBody, extra, err)
+	data, err := cUtils.ErrorWrapper(respBody, extra, err)
 	if err != nil {
 		return err
 	}

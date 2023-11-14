@@ -10,7 +10,7 @@ import (
 
 //go:generate mockery --name=IRequestOpenapi --structname=RequestOpenapi --filename=RequestOpenapi.go
 type IRequestOpenapi interface {
-	InvokeFunctionWithAuth(ctx context.Context, appCtx *structs.AppCtx, apiName string, params interface{}, result interface{}) error
+	InvokeFunctionWithAuth(ctx context.Context, appCtx *structs.AppCtx, apiName string, params interface{}, result interface{}) (err error)
 }
 
 var (

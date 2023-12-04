@@ -9,13 +9,16 @@ import (
 type PlatformEnvType int
 
 const (
-	PlatformEnvLR PlatformEnvType = iota + 3
+	PlatformEnvUAT PlatformEnvType = iota + 2
+	PlatformEnvLR
 	PlatformEnvPRE
 	PlatformEnvOnline
 )
 
 func (p PlatformEnvType) String() string {
 	switch p {
+	case PlatformEnvUAT:
+		return cConstants.EnvTypeStaging
 	case PlatformEnvLR:
 		return cConstants.EnvTypeLr
 	case PlatformEnvPRE:

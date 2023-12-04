@@ -3,10 +3,13 @@ module github.com/byted-apaas/faas-sdk-go
 go 1.16
 
 require (
-	github.com/byted-apaas/server-common-go v0.0.22
-	github.com/bytedance/gopkg v0.0.0-20230728082804-614d0af6619b
-	github.com/google/go-cmp v0.5.7 // indirect
-	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
+	github.com/byted-apaas/server-common-go v0.0.23-0.20231204124753-0d409a75f6d0
 	github.com/tidwall/gjson v1.14.4
-	gopkg.in/yaml.v3 v3.0.1 // indirect
+	golang.org/x/sys v0.5.0 // indirect
 )
+
+// Deprecated
+retract v0.0.6
+
+// Deprecated
+retract v0.0.7

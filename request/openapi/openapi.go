@@ -4,6 +4,8 @@ import (
 	"context"
 	"strconv"
 
+	"github.com/tidwall/gjson"
+
 	"github.com/byted-apaas/faas-sdk-go/common/structs"
 	"github.com/byted-apaas/faas-sdk-go/common/utils"
 	reqCommon "github.com/byted-apaas/faas-sdk-go/request/common"
@@ -12,7 +14,6 @@ import (
 	cHttp "github.com/byted-apaas/server-common-go/http"
 	cStructs "github.com/byted-apaas/server-common-go/structs"
 	cUtils "github.com/byted-apaas/server-common-go/utils"
-	"github.com/tidwall/gjson"
 )
 
 type RequestHttp struct{}

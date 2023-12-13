@@ -12,7 +12,7 @@ func BuildInvokeParamsObj(ctx context.Context, apiName string, params interface{
 		"apiAlias":    apiName,
 		"params":      params,
 		"context":     BuildInvokeSysParams(ctx, params, apiName, needPermission),
-		"triggerType": "workflow",
+		"triggerType": "default-trigger",
 	}, nil
 }
 

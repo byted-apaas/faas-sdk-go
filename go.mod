@@ -3,7 +3,7 @@ module github.com/byted-apaas/faas-sdk-go
 go 1.16
 
 require (
-	github.com/byted-apaas/server-common-go v0.0.44-beta.6
+	github.com/byted-apaas/server-common-go v0.0.44-beta.7
 	github.com/tidwall/gjson v1.14.4
 )
 
